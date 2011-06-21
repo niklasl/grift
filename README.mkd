@@ -19,5 +19,5 @@ Grift - Groovy Installer For Tools
 
 Install any runnable groovy script:
 
-    $ grift install ppxml --from https://raw.github.com/gist/784665/58de9258b3b0412134af40c15822a92ad29641aa/ppxml
+    $ grift --from https://raw.github.com/gist/784665/58de9258b3b0412134af40c15822a92ad29641aa/ppxml install ppxml
 
