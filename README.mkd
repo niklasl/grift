@@ -1,5 +1,23 @@
 Grift - Groovy Installer For Tools
 ========================================================================
 
+## Install ##
 
+1. Create a directory for grifted scripts, e.g.:
+
+    $ mkdir -p $HOME/.groovy/grift/bin
+
+2. Add grift to it:
+
+  $ curl https://raw.github.com/niklasl/grift/master/bin/grift -o $HOME/.groovy/grift/bin/grift
+
+2. Add to your $PATH:
+
+    $ export PATH=$HOME/.groovy/grift/bin:$PATH
+
+## Usage ##
+
+Install any runnable groovy script:
+
+    $ grift install ppxml --from https://raw.github.com/gist/784665/58de9258b3b0412134af40c15822a92ad29641aa/ppxml
 

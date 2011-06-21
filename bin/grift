@@ -1,0 +1,42 @@
+#!/usr/bin/env groovy
+
+def scriptFile = new File(this.class.protectionDomain.codeSource.location.toURI())
+def griftBin = scriptFile.parentFile
+
+def cli = new CliBuilder(usage:"${scriptFile.name} [options] <url>")
+cli.h(longOpt: 'help', 'print this message')
+cli.f(longOpt:'from', args:1, argName:'URL', 'Script source URL')
+
+def options = cli.parse(args)
+def cliargs = options.arguments()
+
+if (options.help || cliargs.size() < 2) {
+  cli.usage()
+  System.exit 0
+}
+
+def lArgs = cliargs[1..-1]
+
+def commands = [:]
+
+def cmdBang = '#!/usr/bin/env groovy\n'
+
+commands.install = {
+  def name = lArgs[0]
+  def destFile = new File(griftBin, name)
+  def sourceUrl = options.f
+  if (!(sourceUrl =~ /https?:/)) {
+    sourceUrl = new File(sourceUrl).toURL() as String
+  }
+  def sourceData = new URL(sourceUrl).bytes
+  if (sourceData[0..1] != '#!' as char[]) {
+    // my proudest groovy moment this evening...
+    sourceData = ((cmdBang.bytes as List) + (sourceData as List)) as byte[]
+  }
+  destFile.bytes = sourceData
+  destFile.executable = true
+}
+
+def cmd = commands[cliargs[0]]
+cmd()
+
